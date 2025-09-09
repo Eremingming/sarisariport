@@ -128,7 +128,7 @@ export default function AboutSection() {
         {/* Sidebar */}
         <aside className="md:col-span-2 space-y-4">
           {/* Live Skills Display */}
-          <div className="window-grid card-paper relative grid-overlay rounded-lg p-4 shadow-sm">
+          <div className="window-grid card-paper relative grid-overlay rounded-lg p-4 shadow-sm overflow-hidden">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <h4 className="font-semibold text-neutral-800">Currently Working With</h4>
@@ -143,7 +143,7 @@ export default function AboutSection() {
           </div>
 
           {/* Achievements */}
-          <div className="window-grid rounded-lg p-4 shadow-sm">
+          {/* <div className="window-grid rounded-lg p-4 shadow-sm">
             <h4 className="font-semibold mb-3 flex items-center gap-2">
               <span>🏆</span>
               Achievements
@@ -159,7 +159,7 @@ export default function AboutSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Stickers Collection */}
           <div className="bg-white border-2 border-neutral-300 rounded-lg p-4 shadow-sm">

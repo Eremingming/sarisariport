@@ -76,9 +76,9 @@ export default function ContactSection() {
       <div className="awning h-3 md:h-4 w-full shadow-sm"></div>
       {/* Section Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 bg-white border-2 border-neutral-300 rounded-full px-4 py-2 shadow-sm">
-          <span className="text-bottle text-xl">📞</span>
-          <span className="font-semibold text-neutral-700">Get In Touch</span>
+        <div className="inline-flex items-center gap-2 bg-neutral-900 text-white border-2 border-neutral-800 rounded-full px-4 py-2 shadow-sm">
+          <span className="text-mustard text-xl">📞</span>
+          <span className="font-semibold">Get In Touch</span>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ export default function ContactSection() {
         {/* Contact Form */}
         <div className="window-grid card-paper relative grid-overlay rounded-lg overflow-hidden shadow-lg">
           {/* Form Header */}
-          <div className="bg-gradient-to-r from-bottle to-maya p-4 relative">
+          <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 p-4 relative">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">📝</span>
@@ -203,7 +203,7 @@ export default function ContactSection() {
         {/* Contact Information Panel */}
         <div className="window-grid card-paper relative grid-overlay rounded-lg overflow-hidden shadow-lg">
           {/* Panel Header */}
-          <div className="bg-gradient-to-r from-mustard to-maya p-4">
+          <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 p-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">📱</span>
@@ -222,17 +222,17 @@ export default function ContactSection() {
                 key={index}
                 onMouseEnter={() => setHoveredContact(index)}
                 onMouseLeave={() => setHoveredContact(null)}
-                className="flex items-start gap-3 p-3 border border-neutral-200 rounded-md hover:bg-chalk/60 transition-colors"
+                className="flex items-start gap-3 p-3 border border-neutral-300 rounded-md hover:bg-chalk transition-colors"
               >
                 <div className={`text-xl ${item.color}`}>{item.icon}</div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium text-neutral-800">{item.label}</div>
-                    <div className="text-xs text-neutral-500">{hoveredContact === index ? 'Tap to copy' : ''}</div>
+                    <div className="text-sm font-medium text-neutral-900">{item.label}</div>
+                    <div className="text-xs text-neutral-600">{hoveredContact === index ? 'Tap to copy' : ''}</div>
                   </div>
-                  <div className="text-neutral-700">{item.value}</div>
+                  <div className="text-neutral-800">{item.value}</div>
                   {hoveredContact === index && (
-                    <div className="text-xs text-neutral-500 mt-1">{item.detail}</div>
+                    <div className="text-xs text-neutral-600 mt-1">{item.detail}</div>
                   )}
                 </div>
               </div>

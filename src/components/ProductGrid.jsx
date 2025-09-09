@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ProductCard from './ProductCard.jsx'
 
 const projects = [
@@ -122,15 +123,31 @@ export default function ProductGrid() {
     return filtered
   }, [selectedCategory, sortBy])
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.06, delayChildren: 0.05 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 18, scale: 0.98 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 320, damping: 26, mass: 0.6 } },
+    exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.18 } }
+  }
+
   return (
     <div className="space-y-6 grain-soft tint-warm">
+      {/* Specials of the Day */}
+
       {/* Filter Bar */}
       <div className="window-grid card-paper relative grid-overlay rounded-lg p-4 shadow-sm">
         <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
           {/* Categories */}
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
-              <button
+              <motion.button
                 key={cat}
                 onClick={(e) => {
                   if (cat !== selectedCategory) {
@@ -148,9 +165,10 @@ export default function ProductGrid() {
                   }
                 }}
                 className={`price-chip chip-press ${selectedCategory === cat ? 'price-chip--active' : ''}`}
+                whileTap={{ scale: 0.96 }}
               >
                 {cat}
-              </button>
+              </motion.button>
             ))}
           </div>
 
@@ -224,44 +242,60 @@ export default function ProductGrid() {
 
       {/* Projects Grid/List */}
       {filteredAndSortedProjects.length > 0 ? (
-        <div className={
-          isGridView 
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
-            : "space-y-4"
-        }>
-          {filteredAndSortedProjects.map((project, index) => (
-            <div 
-              key={index}
-              className="animate-fadeIn"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <ProductCard
-                title={project.title}
-                tag={project.tag}
-                description={project.description}
-                tech={project.tech}
-                link={project.link}
-                featured={project.featured}
-                isListView={!isGridView}
-              />
-            </div>
-          ))}
-        </div>
+        <motion.div
+          className={
+            isGridView 
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
+              : "space-y-4"
+          }
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredAndSortedProjects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                variants={itemVariants}
+                exit="exit"
+                layout
+              >
+                <ProductCard
+                  title={project.title}
+                  tag={project.tag}
+                  description={project.description}
+                  tech={project.tech}
+                  link={project.link}
+                  featured={project.featured}
+                  isListView={!isGridView}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       ) : (
-        <div className="text-center py-12">
+        <motion.div
+          className="text-center py-12"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+        >
           <div className="text-6xl mb-4">🏪</div>
           <h3 className="text-xl font-semibold text-neutral-700 mb-2">Walang nakita!</h3>
           <p className="text-neutral-600 mb-4">No projects match your current filters.</p>
-          <button 
+          <motion.button 
             onClick={() => {
               setSelectedCategory('All')
               setSortBy('featured')
             }}
             className="bg-maya text-white px-4 py-2 rounded-md hover:bg-maya/90 transition-colors"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.96 }}
           >
             Clear all filters
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       )}
     </div>
   )

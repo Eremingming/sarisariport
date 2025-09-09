@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 export default function StoreFrontHero() {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -40,6 +41,20 @@ export default function StoreFrontHero() {
     { icon: '💡', label: 'Ideas' },
     { icon: '🎯', label: 'Focus' },
     { icon: '🏆', label: 'Quality' }
+  ]
+
+  // Filipino sari-sari snacks and candy jars for the shelf
+  const snacks = [
+    { type: 'jar', label: 'Mik-Mik', emoji: '🍬', color: '#d97706' },
+    { type: 'pack', label: 'Chippy', emoji: '🧂', color: '#b91c1c' },
+    { type: 'pack', label: 'Piattos', emoji: '🟨', color: '#2563eb' },
+    { type: 'jar', label: 'Haw Flakes', emoji: '🍥', color: '#ec4899' },
+    { type: 'pack', label: 'Clover', emoji: '🟧', color: '#16a34a' },
+    { type: 'jar', label: 'Pastillas', emoji: '🍭', color: '#f59e0b' },
+    { type: 'pack', label: 'Nova', emoji: '🟫', color: '#7c3aed' },
+    { type: 'jar', label: 'Iced Gems', emoji: '🧁', color: '#06b6d4' },
+    { type: 'pack', label: 'Choc Nut', emoji: '🍫', color: '#92400e' },
+    { type: 'jar', label: 'Yema', emoji: '🍯', color: '#f59e0b' },
   ]
 
   return (
@@ -115,16 +130,43 @@ export default function StoreFrontHero() {
             <div className="window-grid rounded-lg p-4 relative overflow-hidden">
               {/* Glass effect overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none"></div>
-              
-              {/* Product grid */}
-              <div className="grid grid-cols-3 gap-3 relative z-10">
-                {products.map((product, i) => (
-                  <div 
-                    key={i} 
-                    className="product-tile aspect-square bg-gradient-to-br from-chalk to-white border-2 border-neutral-300 rounded-md flex flex-col items-center justify-center text-sm text-neutral-700 hover:scale-110 hover:shadow-xl hover:border-maya transition-all duration-300 cursor-pointer group"
-                  >
-                    <span className="text-2xl mb-1 group-hover:animate-bounce">{product.icon}</span>
-                    <span className="text-xs font-medium">{product.label}</span>
+              {/* Motion Shelf with Filipino snacks */}
+              <div className="relative z-10">
+                {[0, 1].map((row) => (
+                  <div key={row} className={`mb-6 ${row === 0 ? 'mt-1' : ''}`}>
+                    {/* Items on shelf */}
+                    <div className="relative grid grid-cols-5 gap-3 pb-6">
+                      {snacks.slice(row * 5, row * 5 + 5).map((item, i) => (
+                        <motion.div
+                          key={`${item.label}-${i}`}
+                          className="flex flex-col items-center justify-end text-center select-none"
+                          whileHover={{ y: -6, rotate: item.type === 'jar' ? -2 : 0 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                        >
+                          {item.type === 'jar' ? (
+                            <div className="w-full flex flex-col items-center">
+                              {/* Jar cap */}
+                              <div className="w-10 h-2 rounded-t-md border-2 border-neutral-500 bg-neutral-300 shadow-sm"></div>
+                              {/* Jar body */}
+                              <div className="w-14 h-14 rounded-b-2xl border-2 border-neutral-400 bg-white/70 backdrop-blur-sm relative flex items-center justify-center" style={{ boxShadow: 'inset 0 0 0 6px rgba(255,255,255,0.35), inset 0 0 18px rgba(0,0,0,0.06)' }}>
+                                <span className="text-xl" style={{ color: item.color }}>{item.emoji}</span>
+                              </div>
+                              <span className="mt-1 text-[11px] text-neutral-700 font-medium">{item.label}</span>
+                            </div>
+                          ) : (
+                            <div className="w-full flex flex-col items-center">
+                              {/* Snack pack */}
+                              <div className="w-14 h-16 rounded-md border-2 border-neutral-600 flex items-center justify-center text-white shadow" style={{ background: item.color }}>
+                                <span className="text-sm">{item.emoji}</span>
+                              </div>
+                              <span className="mt-1 text-[11px] text-neutral-700 font-medium">{item.label}</span>
+                            </div>
+                          )}
+                        </motion.div>
+                      ))}
+                      {/* Shelf plank */}
+                      <div className="absolute left-0 right-0 bottom-0 h-3 bg-wood border-2 border-neutral-600 rounded-sm shadow-[0_6px_0_rgba(0,0,0,0.1)]"></div>
+                    </div>
                   </div>
                 ))}
               </div>
